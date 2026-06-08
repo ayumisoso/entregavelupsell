@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Bem-vinda(o) ao Círculo Íntimo</title>
+
+  <!-- Google Fonts: Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       RESET GLOBAL
+    ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ============================================================
+       CSS VARIABLES — Dark Premium Palette
+    ============================================================ */
+    :root {
+      --bg:         #0a0a0c;
+      --bg-card:    #111116;
+      --bg-card-2:  #16161e;
+      --text:       #ffffff;
+      --text-muted: #9090a0;
+      --gold:       #d4af37;
+      --gold-light: #f0d060;
+      --gold-dim:   rgba(212, 175, 55, 0.12);
+      --radius:     16px;
+      --radius-sm:  12px;
+    }
+
+    /* ============================================================
+       BODY — centralizado verticalmente
+    ============================================================ */
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(ellipse 75% 40% at 50% 0%,   rgba(212,175,55,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 30% at 0%  80%,  rgba(212,175,55,0.04) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 30% at 100% 50%, rgba(139,0,0,0.05)    0%, transparent 50%);
+    }
+
+    /* ============================================================
+       WRAPPER
+    ============================================================ */
+    .page-wrapper {
+      width: 100%;
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 40px 20px 72px;
+    }
+
+    /* ============================================================
+       BADGE — Upgrade Liberado (com ícone animado)
+    ============================================================ */
+    .badge-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 36px;
+      animation: scaleIn 0.5s cubic-bezier(.34,1.56,.64,1) both;
+    }
+
+    .badge {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-icon {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: var(--gold-dim);
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.1rem;
+      /* Halo triplo dourado */
+      box-shadow:
+        0 0 0  6px rgba(212,175,55,0.07),
+        0 0 0 12px rgba(212,175,55,0.04),
+        0 0 0 20px rgba(212,175,55,0.02);
+    }
+
+    .badge-label {
+      font-size: 0.63rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    /* ============================================================
+       HEADLINE — destaque dourado com text-glow
+    ============================================================ */
+    .headline-block {
+      text-align: center;
+      margin-bottom: 28px;
+      animation: fadeUp 0.65s ease 0.12s both;
+    }
+
+    .headline-block h1 {
+      font-size: clamp(1.45rem, 5.8vw, 1.95rem);
+      font-weight: 900;
+      line-height: 1.18;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-shadow:
+        0 0 40px rgba(212,175,55,0.38),
+        0 0 80px rgba(212,175,55,0.12);
+    }
+
+    /* ============================================================
+       CONFIRMATION CARD
+    ============================================================ */
+    .confirm-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(212,175,55,0.18);
+      border-radius: var(--radius);
+      padding: 28px 22px;
+      margin-bottom: 32px;
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 8px 40px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(212,175,55,0.1);
+      animation: fadeUp 0.65s ease 0.22s both;
+    }
+
+    /* Linha dourada no topo */
+    .confirm-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    /* Indicador de status verde */
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 16px;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
+      flex-shrink: 0;
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.45; }
+    }
+
+    .status-text {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #22c55e;
+      text-transform: uppercase;
+    }
+
+    .confirm-card p {
+      font-size: 0.95rem;
+      color: #d4d4e4;
+      line-height: 1.85;
+      font-weight: 400;
+    }
+
+    /* ============================================================
+       PERKS GRID — 4 benefícios em grid 2×2
+    ============================================================ */
+    .perks-section {
+      margin-bottom: 36px;
+      animation: fadeUp 0.65s ease 0.32s both;
+    }
+
+    .perks-title {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--gold);
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .perks-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .perk-item {
+      background: var(--bg-card-2);
+      border: 1px solid rgba(212,175,55,0.1);
+      border-radius: var(--radius-sm);
+      padding: 15px 13px;
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+    }
+
+    .perk-emoji {
+      font-size: 1.05rem;
+      flex-shrink: 0;
+      line-height: 1;
+      margin-top: 1px;
+    }
+
+    .perk-text {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: #c4c4d8;
+      line-height: 1.4;
+    }
+
+    /* ============================================================
+       CTA — Botão Dourado WhatsApp
+    ============================================================ */
+    .cta-section {
+      animation: fadeUp 0.65s ease 0.42s both;
+    }
+
+    .cta-label {
+      text-align: center;
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    /* Botão dourado com texto preto */
+    .btn-gold {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      width: 100%;
+      padding: 20px 16px;
+      border-radius: var(--radius-sm);
+      background: var(--gold);
+      color: #0a0a0c;
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(0.82rem, 3.4vw, 0.98rem);
+      font-weight: 800;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border: none;
+      cursor: pointer;
+      box-shadow:
+        0 4px 24px rgba(212,175,55,0.38),
+        0 0 50px rgba(212,175,55,0.12);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    /* Efeito shimmer ao hover */
+    .btn-gold::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 55%;
+      height: 100%;
+      background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,0.28) 50%, transparent 62%);
+      transition: left 0.45s ease;
+    }
+
+    .btn-gold:hover::after { left: 160%; }
+
+    .btn-gold:hover,
+    .btn-gold:focus {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(212,175,55,0.5), 0 0 70px rgba(212,175,55,0.18);
+      background: var(--gold-light);
+      outline: none;
+    }
+
+    /* Ícone WhatsApp */
+    .wpp-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+    }
+
+    /* ============================================================
+       DIVIDER
+    ============================================================ */
+    .divider {
+      width: 50px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.45), transparent);
+      margin: 36px auto 28px;
+    }
+
+    /* ============================================================
+       STRIP DE SEGURANÇA
+    ============================================================ */
+    .security-strip {
+      text-align: center;
+      font-size: 0.66rem;
+      color: rgba(144,144,160,0.45);
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       ANIMAÇÕES
+    ============================================================ */
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.7); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================================
+       BREAKPOINT — tablets (≥480px)
+    ============================================================ */
+    @media (min-width: 480px) {
+      .page-wrapper { padding: 52px 36px 80px; }
+    }
+
+  </style>
+</head>
+
+<body>
+  <main class="page-wrapper">
+
+    <!-- ======================================================
+         BADGE — Upgrade Liberado
+    ====================================================== -->
+    <div class="badge-wrap">
+      <div class="badge">
+        <div class="badge-icon">👑</div>
+        <span class="badge-label">Upgrade Liberado</span>
+      </div>
+    </div>
+
+    <!-- ======================================================
+         HEADLINE — em dourado com glow
+    ====================================================== -->
+    <div class="headline-block">
+      <h1>Seja bem-vinda(o) ao meu círculo íntimo</h1>
+    </div>
+
+    <!-- ======================================================
+         CONFIRMATION CARD — texto de entrega
+    ====================================================== -->
+    <div class="confirm-card">
+      <div class="status-row">
+        <div class="status-dot"></div>
+        <span class="status-text">Acesso ativo agora</span>
+      </div>
+      <p>
+        Seu upgrade foi liberado com sucesso. Agora você tem o acesso completo
+        e prioritário diretamente comigo.
+      </p>
+    </div>
+
+    <!-- ======================================================
+         PERKS GRID — o que foi desbloqueado
+    ====================================================== -->
+    <div class="perks-section">
+      <p class="perks-title">✦ O que você desbloqueou ✦</p>
+      <div class="perks-grid">
+        <div class="perk-item">
+          <span class="perk-emoji">💎</span>
+          <span class="perk-text">Conteúdos exclusivos</span>
+        </div>
+        <div class="perk-item">
+          <span class="perk-emoji">📲</span>
+          <span class="perk-text">Acesso direto via WhatsApp</span>
+        </div>
+        <div class="perk-item">
+          <span class="perk-emoji">🔒</span>
+          <span class="perk-text">Espaço 100% privado</span>
+        </div>
+        <div class="perk-item">
+          <span class="perk-emoji">⚡</span>
+          <span class="perk-text">Respostas prioritárias</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================
+         CTA — Botão dourado WhatsApp
+    ====================================================== -->
+    <div class="cta-section">
+      <p class="cta-label">👇 Toque para acessar agora</p>
+
+      <a
+        href="https://wa.me/5511968993672"
+        class="btn-gold"
+        aria-label="Acessar material completo via WhatsApp"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <!-- Ícone SVG do WhatsApp inline (sem dependência externa) -->
+        <svg class="wpp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path fill="#0a0a0c" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path fill="#0a0a0c" d="M12 0C5.373 0 0 5.373 0 12c0 2.123.557 4.115 1.528 5.845L.057 23.04a.75.75 0 0 0 .903.903l5.195-1.471A11.942 11.942 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.734 9.734 0 0 1-4.97-1.363l-.356-.212-3.686 1.044 1.044-3.686-.212-.356A9.734 9.734 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/>
+        </svg>
+
+        ACESSAR MEU MATERIAL COMPLETO (WHATSAPP)
+      </a>
+    </div>
+
+    <!-- ======================================================
+         STRIP DE SEGURANÇA
+    ====================================================== -->
+    <div class="divider"></div>
+    <p class="security-strip">🔒 Acesso seguro e privado garantido</p>
+
+  </main>
+</body>
+</html>
